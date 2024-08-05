@@ -1,0 +1,6 @@
+@University_Project_HostAddress = http://localhost:5091
+
+GET {{University_Project_HostAddress}}/api
+Accept: application/json
+
+###
