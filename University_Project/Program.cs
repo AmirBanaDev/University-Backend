@@ -19,7 +19,8 @@ namespace University_Project
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            
+            builder.Services.AddCors();
+
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("AppDbContext"));
@@ -44,6 +45,11 @@ namespace University_Project
             #endregion
 
             var app = builder.Build();
+
+            app.UseCors(p => p.WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials());
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

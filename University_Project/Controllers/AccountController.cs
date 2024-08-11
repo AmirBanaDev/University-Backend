@@ -5,9 +5,9 @@ using University_Project.Repository.Interface;
 using University_Project.DTO.User;
 using Microsoft.AspNetCore.Authorization;
 
-namespace University_Project.Controllers.Admin
+namespace University_Project.Controllers
 {
-    [Route("api/admin/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
