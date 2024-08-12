@@ -6,7 +6,7 @@ namespace University_Project.Repository.Interface
 {
     public interface IAccountRepository
     {
-        Task<bool> Login(SignInDto dto, bool shouldAdmin);
+        Task<bool> Login(SignInDto dto);
         Task<SignUpResultDto> SignUp(SignUpDto dto);
         Task Logout();
         Task<int?> GetLoggedinUser();

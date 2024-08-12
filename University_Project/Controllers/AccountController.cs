@@ -26,7 +26,7 @@ namespace University_Project.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] SignInDto dto)
         {
-            bool isCorrect = await _accountRepo.Login(dto, shouldAdmin: true);
+            bool isCorrect = await _accountRepo.Login(dto);
             return isCorrect ? Ok("You Successfully login") : BadRequest("No login accepted");
         }
         [HttpPost("logout")]

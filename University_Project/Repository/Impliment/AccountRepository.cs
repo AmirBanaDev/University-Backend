@@ -78,18 +78,12 @@ namespace University_Project.Repository.Impliment
             };
 
         }
-        public async Task<bool> Login(SignInDto dto, bool shouldAdmin)
+        public async Task<bool> Login(SignInDto dto)
         {
             User? user = await _userManager.Users.FirstOrDefaultAsync(u => dto.PhoneNumber == u.PhoneNumber);
             if (user == null)
             {
                 Console.WriteLine("No current user");
-                return false;
-            }
-            bool admin = await _userManager.IsInRoleAsync(user, "admin");
-            if (shouldAdmin && admin == false)
-            {
-                Console.WriteLine("not admin");
                 return false;
             }
             SignInResult signInResult = await _signInManager.PasswordSignInAsync(user, dto.Password, false, false);
