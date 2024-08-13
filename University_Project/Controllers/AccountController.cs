@@ -4,6 +4,7 @@ using University_Project.DTO.Admin;
 using University_Project.Repository.Interface;
 using University_Project.DTO.User;
 using Microsoft.AspNetCore.Authorization;
+using University_Project.DTO.Account;
 
 namespace University_Project.Controllers
 {
@@ -26,8 +27,8 @@ namespace University_Project.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] SignInDto dto)
         {
-            bool isCorrect = await _accountRepo.Login(dto);
-            return isCorrect ? Ok("You Successfully login") : BadRequest("No login accepted");
+            SignInResultDto user = await _accountRepo.Login(dto);
+            return user != null ? Ok(user) : BadRequest("No login accepted");
         }
         [HttpPost("logout")]
         [Authorize]

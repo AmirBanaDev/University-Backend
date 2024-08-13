@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using University_Project.Data;
+using University_Project.DTO.Account;
 using University_Project.DTO.Admin;
 using University_Project.DTO.User;
 using University_Project.Model;
@@ -78,20 +79,26 @@ namespace University_Project.Repository.Impliment
             };
 
         }
-        public async Task<bool> Login(SignInDto dto)
+        public async Task<SignInResultDto?> Login(SignInDto dto)
         {
+
             User? user = await _userManager.Users.FirstOrDefaultAsync(u => dto.PhoneNumber == u.PhoneNumber);
             if (user == null)
             {
                 Console.WriteLine("No current user");
-                return false;
+                return null;
             }
             SignInResult signInResult = await _signInManager.PasswordSignInAsync(user, dto.Password, false, false);
             if (signInResult.Succeeded)
             {
-                return true;
+                return new SignInResultDto
+                {
+                    PhoneNumber = user.PhoneNumber,
+                    UserName = user.UserName,
+                    Role = (await _userManager.GetRolesAsync(user)).ToList()
+                };
             }
-            return false;
+            return null;
         }
         public async Task Logout() => await _signInManager.SignOutAsync();
         public async Task<int?> GetLoggedinUser()
