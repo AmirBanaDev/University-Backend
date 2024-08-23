@@ -42,6 +42,7 @@ namespace University_Project
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             builder.Services.AddScoped<IAccountRepository, AccountRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<ICourseTypeRepository, CourseTypeRepository>();
             #endregion
 
             var app = builder.Build();

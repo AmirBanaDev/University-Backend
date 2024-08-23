@@ -16,7 +16,7 @@
         public int NumberOfSessions {  get; set; }
         public string Location {  get; set; }
         public float SessionLength {  get; set; }
-        public bool IsFinished {  get; set; }= false;
+        public bool IsFinished {  get; set; } = false;
         public List<RollCall> RollCallList { get; set; }
         //add users attendent
     }

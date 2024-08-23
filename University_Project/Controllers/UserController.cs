@@ -4,7 +4,7 @@ using University_Project.Model;
 using University_Project.Repository.Interface;
 using University_Project.Utility.Mapper;
 
-namespace University_Project.Controllers.Admin
+namespace University_Project.Controllers
 {
     [Route("api/admin/[controller]")]
     [ApiController]
@@ -31,10 +31,10 @@ namespace University_Project.Controllers.Admin
             return Ok(users);
         }
         [HttpPut("update/{id}")]
-        public async Task<IActionResult> Update(int id,[FromBody] UpdateUserByAdminDto dto)
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateUserByAdminDto dto)
         {
             User? modifiedData = await _userRepo.Update(id, dto);
-            if (modifiedData == null) 
+            if (modifiedData == null)
                 return NotFound();
             return CreatedAtAction(nameof(GetById), new { id = modifiedData.Id }, modifiedData.UserToGetUserResultDto());
         }

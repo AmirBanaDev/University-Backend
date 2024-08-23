@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace University_Project.Model
 {
@@ -9,7 +10,7 @@ namespace University_Project.Model
     {
         public string IdCard {  get; set; }
         public string? Position {  get; set; }
-        [ForeignKey(nameof(Department))]
+        [ForeignKey("Department")]
         public int? DepartmentId {  get; set; }
         public Department? Department { get; set; }
         public string? Birthdate {  get; set; }

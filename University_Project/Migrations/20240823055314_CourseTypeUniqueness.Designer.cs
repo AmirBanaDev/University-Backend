@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using University_Project.Data;
 
@@ -11,9 +12,11 @@ using University_Project.Data;
 namespace University_Project.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240823055314_CourseTypeUniqueness")]
+    partial class CourseTypeUniqueness
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,7 +241,14 @@ namespace University_Project.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("User_ManagerId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("User_ManagerId")
+                        .IsUnique()
+                        .HasFilter("[User_ManagerId] IS NOT NULL");
 
                     b.ToTable("departments");
                 });
@@ -513,6 +523,15 @@ namespace University_Project.Migrations
                     b.Navigation("Course");
                 });
 
+            modelBuilder.Entity("University_Project.Model.Department", b =>
+                {
+                    b.HasOne("University_Project.Model.User", "Manager")
+                        .WithOne()
+                        .HasForeignKey("University_Project.Model.Department", "User_ManagerId");
+
+                    b.Navigation("Manager");
+                });
+
             modelBuilder.Entity("University_Project.Model.RollCall", b =>
                 {
                     b.HasOne("University_Project.Model.Course", "Course")
@@ -533,7 +552,7 @@ namespace University_Project.Migrations
             modelBuilder.Entity("University_Project.Model.User", b =>
                 {
                     b.HasOne("University_Project.Model.Department", "Department")
-                        .WithMany("Members")
+                        .WithMany()
                         .HasForeignKey("DepartmentId");
 
                     b.Navigation("Department");
@@ -547,11 +566,6 @@ namespace University_Project.Migrations
             modelBuilder.Entity("University_Project.Model.CourseType", b =>
                 {
                     b.Navigation("Courses");
-                });
-
-            modelBuilder.Entity("University_Project.Model.Department", b =>
-                {
-                    b.Navigation("Members");
                 });
 #pragma warning restore 612, 618
         }
