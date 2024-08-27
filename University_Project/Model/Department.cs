@@ -13,6 +13,8 @@ namespace University_Project.Model
         public List<User> Members { get; set; }
         [Required]
         public string Name { get; set; }
+        [DisplayName("Manager")]
+        public int? UserId { get; set; }
 
     }
 }
