@@ -7,7 +7,6 @@ namespace University_Project.DTO.Course
         public int TypeId { get; set; }
         public string? Banner { get; set; }
         public string? Description { get; set; }
-        public int UserId { get; set; }
         public int DepartmentId { get; set; }
         public string? Teacher { get; set; }
         public bool NeedSignup { get; set; } = false;

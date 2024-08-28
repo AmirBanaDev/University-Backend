@@ -29,6 +29,13 @@ namespace University_Project.Controllers
             if(course == null) return NotFound();
             return Ok(course);
         }
+        [HttpGet("department/{id}")]
+        public async Task<IActionResult> GetByDepartment(int id)
+        {
+            GetCourseDto? course = await _repo.GetByDepartment(id);
+            if (course == null) return NotFound();
+            return Ok(course);
+        }
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] CreateCourseDto dto)
         {

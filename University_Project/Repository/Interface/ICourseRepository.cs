@@ -7,6 +7,7 @@ namespace University_Project.Repository.Interface
     {
         public Task<List<GetCourseDto>> GetAll();
         public Task<GetCourseDto?> GetById(int id);
+        public Task<GetCourseDto?> GetByDepartment(int id);
         public Task<GetCourseDto?> Create(CreateCourseDto course);
         public Task<GetCourseDto?> Update(int id, UpdateCourseDto course);
         public Task<bool> DeleteById(int id);

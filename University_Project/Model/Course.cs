@@ -10,8 +10,6 @@ namespace University_Project.Model
         public CourseType Type { get; set; }
         public string? Banner {  get; set; }
         public string? Description {  get; set; }
-        public int UserId {  get; set; }
-        public User Creator {  get; set; }
         public int DepartmentId {  get; set; }
         public Department Department { get; set; }
         //add departments

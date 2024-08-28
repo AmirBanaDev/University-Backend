@@ -7,7 +7,6 @@
         public string Type {  get; set; }
         public string? Banner {  get; set; }
         public string? Description { get; set; }
-        public string Creator {  get; set; }
         public string Deparment {  get; set; }
         public string? teacher {  get; set; }
         public bool needSignup {  get; set; }

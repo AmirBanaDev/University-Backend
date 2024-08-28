@@ -10,11 +10,9 @@ namespace University_Project.Model
     {
         public int Id { get; set; }
         [AllowNull]
-        public List<User> Members { get; set; }
+        public ICollection<User> Members { get; set; }
         [Required]
         public string Name { get; set; }
-        [DisplayName("Manager")]
-        public int? UserId { get; set; }
-
+        public ICollection<Course> Courses { get; set; }
     }
 }
