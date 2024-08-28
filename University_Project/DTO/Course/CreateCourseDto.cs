@@ -1,4 +1,5 @@
-﻿namespace University_Project.DTO.Course
+﻿using University_Project.Model;
+namespace University_Project.DTO.Course
 {
     public class CreateCourseDto
     {
