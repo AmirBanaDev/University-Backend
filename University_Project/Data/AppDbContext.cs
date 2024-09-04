@@ -42,7 +42,6 @@ namespace University_Project.Data
             builder.Entity<User>(b =>
             {
                 b.ToTable("User");
-
                 b.Property(user => user.Email).IsRequired(false);
                 b.Property(e => e.UserName).HasColumnName("FullName");
                 b.Property(e => e.NormalizedUserName).HasColumnName("NormalizedFullName");

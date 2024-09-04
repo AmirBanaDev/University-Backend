@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using University_Project.Data;
 
@@ -11,9 +12,11 @@ using University_Project.Data;
 namespace University_Project.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240904075010_userName_unicode")]
+    partial class userName_unicode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -423,8 +426,8 @@ namespace University_Project.Migrations
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(256)")
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(256)")
                         .HasColumnName("FullName");
 
                     b.HasKey("Id");

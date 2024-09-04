@@ -95,7 +95,8 @@ namespace University_Project.Repository.Impliment
                 {
                     PhoneNumber = user.PhoneNumber,
                     UserName = user.UserName,
-                    Role = (await _userManager.GetRolesAsync(user)).ToList()
+                    Role = (await _userManager.GetRolesAsync(user)).ToList(),
+                    Department = user.DepartmentId
                 };
             }
             return null;
