@@ -15,7 +15,7 @@ namespace University_Project.Model
         //add departments
         public string? Teacher {  get; set; }
         public bool NeedSignup { get; set; } = false;
-        public DateTime StartDate { get; set; }
+        public DateOnly StartDate { get; set; }
         public string? Schedule { get; set; }
         public int NumberOfSessions {  get; set; }
         public string Location {  get; set; }

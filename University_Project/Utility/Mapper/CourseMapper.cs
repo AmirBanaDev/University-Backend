@@ -32,7 +32,6 @@ namespace University_Project.Utility.Mapper
             {
                 Name = dto.Name,
                 TypeId = dto.TypeId,
-                Banner = dto.Banner,
                 Description = dto.Description,
                 DepartmentId = dto.DepartmentId,
                 Teacher = dto.Teacher,
@@ -50,7 +49,6 @@ namespace University_Project.Utility.Mapper
         {
             item.Name = dto.Name;
             item.TypeId = dto.TypeId;
-            item.Banner = dto.Banner;
             item.Description = dto.Description;
             item.Teacher = dto.Teacher;
             item.NeedSignup = dto.NeedSignup;

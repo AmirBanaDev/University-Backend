@@ -4,11 +4,11 @@
     {
         public string Name { get; set; }
         public int TypeId { get; set; }
-        public string? Banner { get; set; }
+        public IFormFile? Banner { get; set; }
         public string? Description { get; set; }
         public string? Teacher { get; set; }
         public bool NeedSignup { get; set; }
-        public DateTime StartDate { get; set; }
+        public DateOnly StartDate { get; set; }
         public string? Schedule { get; set; }
         public int NumberOfSessions { get; set; }
         public string Location { get; set; }

@@ -5,6 +5,7 @@ using University_Project.Data;
 using University_Project.Model;
 using University_Project.Repository.Impliment;
 using University_Project.Repository.Interface;
+using University_Project.Utility.PublicClasses;
 
 namespace University_Project
 {
@@ -44,6 +45,7 @@ namespace University_Project
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<ICourseTypeRepository, CourseTypeRepository>();
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+            builder.Services.AddScoped<Uploader>();
             #endregion
 
             var app = builder.Build();
@@ -59,6 +61,8 @@ namespace University_Project
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseStaticFiles();
 
             app.UseHttpsRedirection();
 

@@ -5,16 +5,18 @@ using University_Project.DTO.Course;
 using University_Project.Model;
 using University_Project.Repository.Interface;
 using University_Project.Utility.Mapper;
+using University_Project.Utility.PublicClasses;
 
 namespace University_Project.Repository.Impliment
 {
     public class CourseRepository : ICourseRepository
     {
         private readonly AppDbContext _context;
-        private readonly UserManager<User> _userManager;
-        public CourseRepository(AppDbContext context)
+        private readonly Uploader _uploader;
+        public CourseRepository(AppDbContext context, Uploader uploader)
         {
             _context = context;
+            _uploader = uploader;
         }
         public async Task<List<GetCourseDto>> GetAll()
         {
@@ -31,19 +33,21 @@ namespace University_Project.Repository.Impliment
             if (item == null) return null;
             return item.CourseToGetDto();
         }
-        public async Task<GetCourseDto?> GetByDepartment(int id)
+        public async Task<List<GetCourseDto>> GetByDepartment(int id)
         {
-            Course? item = await _context.courses.Include(e => e.Department).
+            List<Course> item = await _context.courses.Include(e => e.Department).
                 Include(e => e.Type)
-                .FirstOrDefaultAsync(e => e.DepartmentId == id);
+                .ToListAsync();
             if (item == null) return null;
-            return item.CourseToGetDto();
+            return item.Where(e => e.DepartmentId == id).Select(e=>e.CourseToGetDto()).ToList();
         }
         public async Task<GetCourseDto?> Create(CreateCourseDto dto)
         {
             try
             {
                 Course item = dto.CreateDtoToCourse();
+                Console.WriteLine("----item:"+ item.Banner);
+                item.Banner = _uploader.UploadFile(dto.Banner, "images\\courses\\");
                 item.Type = await _context.coursesType.FirstOrDefaultAsync( e=>e.Id == dto.TypeId );
                 item.Department = await _context.departments.FirstOrDefaultAsync(e => e.Id == dto.DepartmentId);
                 await _context.courses.AddAsync(item);
@@ -52,6 +56,7 @@ namespace University_Project.Repository.Impliment
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return null;
             }
         }
@@ -62,6 +67,7 @@ namespace University_Project.Repository.Impliment
                 .FirstOrDefaultAsync(c => c.Id == id);
             if(item == null) return null;
             item = dto.UpdateDtoToCourse(item);
+            item.Banner = _uploader.UploadFile(dto.Banner, @"images/courses/");
             item.Type = await _context.coursesType.FirstOrDefaultAsync(e => e.Id == dto.TypeId);
             await _context.SaveChangesAsync();
             return item.CourseToGetDto();

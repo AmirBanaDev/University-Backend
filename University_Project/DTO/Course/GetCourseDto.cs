@@ -10,7 +10,7 @@
         public string Deparment {  get; set; }
         public string? teacher {  get; set; }
         public bool needSignup {  get; set; }
-        public DateTime StartDate { get; set; }
+        public DateOnly StartDate { get; set; }
         public string? Schedule { get; set; }
         public int NumberOfSessions { get; set; }
         public string Location { get; set; }
