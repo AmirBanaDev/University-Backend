@@ -54,7 +54,7 @@ namespace University_Project.Controllers
             if(!isDeleted) return NotFound();
             return NoContent();
         }
-        [HttpPut("{id}/finish")]
+        [HttpPatch("{id}/finish")]
         public async Task<IActionResult> FinishCourse(int id)
         {
             bool isFinished = await _repo.FinishCourse(id);
