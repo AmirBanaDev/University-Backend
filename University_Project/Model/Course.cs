@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Net;
 
 namespace University_Project.Model
 {
@@ -25,6 +26,7 @@ namespace University_Project.Model
 
         [AllowNull]
         public List<RollCall> RollCallList { get; set; }
-        //add users attendent
+        [AllowNull]
+        public List<Course> Contents { get; set; }
     }
 }

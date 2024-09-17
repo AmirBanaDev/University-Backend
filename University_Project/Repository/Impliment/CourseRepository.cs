@@ -46,7 +46,6 @@ namespace University_Project.Repository.Impliment
             try
             {
                 Course item = dto.CreateDtoToCourse();
-                Console.WriteLine("----item:"+ item.Banner);
                 item.Banner = _uploader.UploadFile(dto.Banner, "images\\courses\\");
                 item.Type = await _context.coursesType.FirstOrDefaultAsync( e=>e.Id == dto.TypeId );
                 item.Department = await _context.departments.FirstOrDefaultAsync(e => e.Id == dto.DepartmentId);
@@ -69,6 +68,7 @@ namespace University_Project.Repository.Impliment
             item = dto.UpdateDtoToCourse(item);
             item.Banner = _uploader.UploadFile(dto.Banner, @"images/courses/");
             item.Type = await _context.coursesType.FirstOrDefaultAsync(e => e.Id == dto.TypeId);
+            _context.courses.Update(item);
             await _context.SaveChangesAsync();
             return item.CourseToGetDto();
         }
