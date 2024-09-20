@@ -22,7 +22,6 @@ namespace University_Project.Utility.Mapper
         {
             return new CourseContent
             {
-                CourseId = dto.CourseId,
                 Title = dto.Title,
                 Description = dto.Description
             };

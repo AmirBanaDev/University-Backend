@@ -21,9 +21,9 @@ namespace University_Project.Utility.Mapper
                 Schedule = course.Schedule,
                 NumberOfSessions = course.NumberOfSessions,
                 Location = course.Location,
-                SessionHour = course.SessionHour,
-                SessionMinute = course.SessionMinute,
+                SessionTime = course.SessionTime,
                 IsFinished = course.IsFinished,
+                ContentDtos = course.Contents?.Select(e=>e.ContentToGetDto()).ToList(),
             };
         }
         public static Course CreateDtoToCourse(this CreateCourseDto dto)
@@ -40,8 +40,7 @@ namespace University_Project.Utility.Mapper
                 Schedule = dto.Schedule,
                 NumberOfSessions = dto.NumberOfSessions,
                 Location = dto.Location,
-                SessionHour = dto.SessionHour,
-                SessionMinute = dto.SessionMinute,
+                SessionTime = dto.SessionTime,
                 IsFinished = false
             };
         }
@@ -56,10 +55,29 @@ namespace University_Project.Utility.Mapper
             item.Schedule = dto.Schedule;
             item.NumberOfSessions = dto.NumberOfSessions;
             item.Location = dto.Location;
-            item.SessionHour = dto.SessionHour;
-            item.SessionMinute = dto.SessionMinute;
+            item.SessionTime = dto.SessionTime;
             item.IsFinished = false;
             return item;
+        }
+        public static GetFavoriteCourseDto CourseToGetFavorite(this Course item)
+        {
+            return new GetFavoriteCourseDto
+            {
+                Id = item.Id,
+                Name = item.Name,
+                StartDate = item.StartDate,
+                IsFinished = item.IsFinished,
+            };
+        }
+        public static GetSignedUpCourseDto CourseToSignedupDto(this Course item)
+        {
+            return new GetSignedUpCourseDto
+            {
+                Id = item.Id,
+                Name = item.Name,
+                StartDate = item.StartDate,
+                IsFinished = item.IsFinished
+            };
         }
     }
 }

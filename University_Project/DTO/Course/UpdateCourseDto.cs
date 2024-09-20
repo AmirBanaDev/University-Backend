@@ -12,7 +12,6 @@
         public string? Schedule { get; set; }
         public int NumberOfSessions { get; set; }
         public string Location { get; set; }
-        public int SessionHour { get; set; }
-        public int SessionMinute { get; set; }
+        public int SessionTime { get; set; }
     }
 }

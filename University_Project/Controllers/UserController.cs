@@ -6,7 +6,7 @@ using University_Project.Utility.Mapper;
 
 namespace University_Project.Controllers
 {
-    [Route("api/admin/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class UserController : Controller
     {
@@ -15,7 +15,7 @@ namespace University_Project.Controllers
         {
             _userRepo = userRepo;
         }
-        [HttpGet("Get")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
             GetUserResultDto? user = await _userRepo.GetById(id);
@@ -29,6 +29,13 @@ namespace University_Project.Controllers
             List<GetUserResultDto> users = await _userRepo.GetAll();
             if (users.Count == 0) return Ok("User List Is Empty");
             return Ok(users);
+        }
+        [HttpGet("favosign/{id}")]
+        public async Task<IActionResult> GetFavoAndSigns(int id)
+        {
+            GetUserFavoAndCoursesDto? data = await _userRepo.GetFavoAndSignups(id);
+            if (data == null) return NotFound();
+            return Ok(data);
         }
         [HttpPut("update/{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateUserByAdminDto dto)
@@ -44,6 +51,27 @@ namespace University_Project.Controllers
             bool result = await _userRepo.Delete(id);
             if (!result) return NotFound();
             return Ok("User Deleted");
+        }
+        [HttpPatch("{id}/favo/{cid}")]
+        public async Task<IActionResult> AddFavoriteCourse(int id, int cid)
+        {
+            bool result = await _userRepo.AddFavoriteCourse(id, cid);
+            if (!result) return NotFound();
+            return NoContent();
+        }
+        [HttpPatch("{id}/sign/{cid}")]
+        public async Task<IActionResult> AddSignupCourse(int id, int cid)
+        {
+            bool result = await _userRepo.AddSignupCourse(id, cid);
+            if (!result) return NotFound();
+            return NoContent();
+        }
+        [HttpPatch("{id}/favo/{cid}/remove")]
+        public async Task<IActionResult> RemoveFavoriteCourse(int id, int cid)
+        {
+            bool result = await _userRepo.RemoveFavoriteCourse(id, cid);
+            if (!result) return NotFound();
+            return NoContent();
         }
     }
 }

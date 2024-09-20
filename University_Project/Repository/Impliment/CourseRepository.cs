@@ -29,6 +29,7 @@ namespace University_Project.Repository.Impliment
         {
             Course? item = await _context.courses.Include(e => e.Department).
                 Include(e=>e.Type)
+                .Include(e=>e.Contents)
                 .FirstOrDefaultAsync(e => e.Id == id);
             if (item == null) return null;
             return item.CourseToGetDto();

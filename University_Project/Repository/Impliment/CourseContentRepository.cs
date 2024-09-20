@@ -21,36 +21,54 @@ namespace University_Project.Repository.Impliment
         }
         public async Task<List<GetContentDto>?> GetByCourse(int courseId)
         {
-            List<CourseContent> courseContents =  await _context.coursesContent.ToListAsync();
-            IEnumerable<CourseContent> contentList = courseContents.Where(e => e.CourseId == courseId);
-            if (contentList.IsNullOrEmpty()) return null;
-            List<GetContentDto> result = contentList.Select(e=>e.ContentToGetDto()).ToList();
-            return result;
-        }
-        public async Task<GetContentDto> Create(int courseId, SendContentDto dto)
-        {
-            CourseContent item = dto.SendContentDtoToContent();
-            foreach(var file in dto.File)
+            try
             {
-                item.File.Add(_uploader.UploadFile(file, "images\\courseContent\\" + courseId));
+                List<CourseContent> courseContents = await _context.coursesContent.ToListAsync();
+                IEnumerable<CourseContent> contentList = courseContents.Where(e => e.CourseId == courseId);
+                if (contentList.IsNullOrEmpty()) return null;
+                List<GetContentDto> result = contentList.Select(e => e.ContentToGetDto()).ToList();
+                return result;
             }
-            await _context.coursesContent.AddAsync(item);
-            await _context.SaveChangesAsync();
-            return item.ContentToGetDto();
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+        public async Task<GetContentDto?> Create(int courseId, SendContentDto dto)
+        {
+            try
+            {
+                CourseContent item = dto.SendContentDtoToContent();
+                item.CourseId = courseId;
+                item.File = _uploader.UploadFile(dto.File, "courseContent\\" + courseId);
+                await _context.coursesContent.AddAsync(item);
+                await _context.SaveChangesAsync();
+                return item.ContentToGetDto();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
         public async Task<GetContentDto?> Update(int id, UpdateContentDto dto)
         {
             CourseContent? item = await _context.coursesContent.FirstOrDefaultAsync(e => e.Id == id);
             if (item == null) return null;
-            item = dto.UpdateSendDtoToCotent(item);
-            item.File.Clear();
-            foreach(var file in dto.File)
+            try
             {
-                item.File.Add(_uploader.UploadFile(file, "images\\courseContent\\" + item.CourseId));
+                item = dto.UpdateSendDtoToCotent(item);
+                item.File = _uploader.UploadFile(dto.File, "images\\courseContent\\" + item.CourseId);
+                _context.coursesContent.Update(item);
+                await _context.SaveChangesAsync();
+                return item.ContentToGetDto();
             }
-            _context.coursesContent.Update(item);
-            await _context.SaveChangesAsync();
-            return item.ContentToGetDto();
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
         public async Task<bool> Delete(int id)
         {

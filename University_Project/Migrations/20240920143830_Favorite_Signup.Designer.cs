@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using University_Project.Data;
 
@@ -11,9 +12,11 @@ using University_Project.Data;
 namespace University_Project.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240920143830_Favorite_Signup")]
+    partial class Favorite_Signup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,7 +168,10 @@ namespace University_Project.Migrations
                     b.Property<string>("Schedule")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SessionTime")
+                    b.Property<int>("SessionHour")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SessionMinute")
                         .HasColumnType("int");
 
                     b.Property<int?>("Signup")

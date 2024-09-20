@@ -20,13 +20,12 @@ namespace University_Project.Model
         public string? Schedule { get; set; }
         public int NumberOfSessions {  get; set; }
         public string Location {  get; set; }
-        public int SessionHour {  get; set; }
-        public int SessionMinute { get; set; }
+        public int SessionTime {  get; set; }
         public bool IsFinished {  get; set; } = false;
 
         [AllowNull]
         public List<RollCall> RollCallList { get; set; }
         [AllowNull]
-        public List<Course> Contents { get; set; }
+        public List<CourseContent> Contents { get; set; }
     }
 }

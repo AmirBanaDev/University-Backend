@@ -1,4 +1,7 @@
-﻿namespace University_Project.DTO.Course
+﻿using System.Diagnostics.CodeAnalysis;
+using University_Project.DTO.CourseContent;
+
+namespace University_Project.DTO.Course
 {
     public class GetCourseDto
     {
@@ -14,8 +17,9 @@
         public string? Schedule { get; set; }
         public int NumberOfSessions { get; set; }
         public string Location { get; set; }
-        public int SessionHour { get; set; }
-        public int SessionMinute { get; set; }
+        public int SessionTime { get; set; }
+        [AllowNull]
+        public List<GetContentDto> ContentDtos { get; set; }
         public bool IsFinished { get; set; } = false;
     }
 }

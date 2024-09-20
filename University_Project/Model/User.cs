@@ -15,5 +15,11 @@ namespace University_Project.Model
         public string? ProfilePicture {  get; set; }
         [DefaultValue(0)]
         public int CourseAttendent { get; set; }
+        public List<UserCourseFavorite> Favorite { get; set; }
+        [ForeignKey("Favorite")]
+        public List<Course> Favorites { get; set; }
+        public List<UserCourseSignup> Signup { get; set; }
+        [ForeignKey("Signup")]
+        public List<Course> Signups { get; set; }
     }
 }

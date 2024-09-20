@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using University_Project.Data;
 
@@ -11,9 +12,11 @@ using University_Project.Data;
 namespace University_Project.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240919150612_Single_Content_File")]
+    partial class Single_Content_File
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,14 +139,14 @@ namespace University_Project.Migrations
                     b.Property<string>("Banner")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("CourseId")
+                        .HasColumnType("int");
+
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Favorite")
-                        .HasColumnType("int");
 
                     b.Property<bool>("IsFinished")
                         .HasColumnType("bit");
@@ -165,10 +168,10 @@ namespace University_Project.Migrations
                     b.Property<string>("Schedule")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SessionTime")
+                    b.Property<int>("SessionHour")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Signup")
+                    b.Property<int>("SessionMinute")
                         .HasColumnType("int");
 
                     b.Property<DateOnly>("StartDate")
@@ -182,11 +185,9 @@ namespace University_Project.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CourseId");
+
                     b.HasIndex("DepartmentId");
-
-                    b.HasIndex("Favorite");
-
-                    b.HasIndex("Signup");
 
                     b.HasIndex("TypeId");
 
@@ -450,52 +451,6 @@ namespace University_Project.Migrations
                     b.ToTable("User", (string)null);
                 });
 
-            modelBuilder.Entity("University_Project.Model.UserCourseFavorite", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserCourseFavorite");
-                });
-
-            modelBuilder.Entity("University_Project.Model.UserCourseSignup", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserCourseSignup");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("University_Project.Model.Role", null)
@@ -549,19 +504,15 @@ namespace University_Project.Migrations
 
             modelBuilder.Entity("University_Project.Model.Course", b =>
                 {
+                    b.HasOne("University_Project.Model.Course", null)
+                        .WithMany("Contents")
+                        .HasForeignKey("CourseId");
+
                     b.HasOne("University_Project.Model.Department", "Department")
                         .WithMany("Courses")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("University_Project.Model.User", null)
-                        .WithMany("Favorites")
-                        .HasForeignKey("Favorite");
-
-                    b.HasOne("University_Project.Model.User", null)
-                        .WithMany("Signups")
-                        .HasForeignKey("Signup");
 
                     b.HasOne("University_Project.Model.CourseType", "Type")
                         .WithMany("Courses")
@@ -577,7 +528,7 @@ namespace University_Project.Migrations
             modelBuilder.Entity("University_Project.Model.CourseContent", b =>
                 {
                     b.HasOne("University_Project.Model.Course", "Course")
-                        .WithMany("Contents")
+                        .WithMany()
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -611,44 +562,6 @@ namespace University_Project.Migrations
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("University_Project.Model.UserCourseFavorite", b =>
-                {
-                    b.HasOne("University_Project.Model.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("University_Project.Model.User", "User")
-                        .WithMany("Favorite")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("University_Project.Model.UserCourseSignup", b =>
-                {
-                    b.HasOne("University_Project.Model.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("University_Project.Model.User", "User")
-                        .WithMany("Signup")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("University_Project.Model.Course", b =>
                 {
                     b.Navigation("Contents");
@@ -666,17 +579,6 @@ namespace University_Project.Migrations
                     b.Navigation("Courses");
 
                     b.Navigation("Members");
-                });
-
-            modelBuilder.Entity("University_Project.Model.User", b =>
-                {
-                    b.Navigation("Favorite");
-
-                    b.Navigation("Favorites");
-
-                    b.Navigation("Signup");
-
-                    b.Navigation("Signups");
                 });
 #pragma warning restore 612, 618
         }
