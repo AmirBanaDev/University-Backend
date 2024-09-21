@@ -93,6 +93,7 @@ namespace University_Project.Repository.Impliment
             {
                 return new SignInResultDto
                 {
+                    Id = user.Id,
                     PhoneNumber = user.PhoneNumber,
                     UserName = user.UserName,
                     Role = (await _userManager.GetRolesAsync(user)).ToList(),
