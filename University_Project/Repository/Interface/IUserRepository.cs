@@ -5,7 +5,7 @@ namespace University_Project.Repository.Interface
 {
     public interface IUserRepository
     {
-        Task<GetUserResultDto?> GetById(string id);
+        Task<GetUserResultDto?> GetById(int id);
         Task<GetUserFavoAndCoursesDto?> GetFavoAndSignups(int id);
         Task<List<GetUserResultDto>> GetAll();
         Task<List<Role>> GetRoles();

@@ -16,7 +16,7 @@ namespace University_Project.Controllers
             _userRepo = userRepo;
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(string id)
+        public async Task<IActionResult> GetById(int id)
         {
             GetUserResultDto? user = await _userRepo.GetById(id);
             if (user == null)

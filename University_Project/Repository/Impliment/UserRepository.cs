@@ -17,16 +17,26 @@ namespace University_Project.Repository.Impliment
             _context = context;
             _userManager = userManager;
         }
-        public async Task<GetUserResultDto?> GetById(string id)
+        public async Task<GetUserResultDto?> GetById(int id)
         {
-            User? user = await _userManager.FindByIdAsync(id);
-            return user?.UserToGetUserResultDto();
+            //User? user = await _userManager.FindByIdAsync(id);
+            User? user = await _context.users.Include(e=>e.Department).FirstOrDefaultAsync(e=>e.Id == id);
+            if (user == null) return null;
+            IList<string> roles = await _userManager.GetRolesAsync(user);
+            var dto = user.UserToGetUserResultDto();
+            dto.roles = roles;
+            return dto;
         }
         public async Task<List<GetUserResultDto>> GetAll()
         {
-            List<GetUserResultDto> users = await _context.users
-                .Include(e => e.Department).Select(user => user.UserToGetUserResultDto()).ToListAsync();
-            return users;
+            List<User> users = await _context.users
+                .Include(e => e.Department).ToListAsync();
+            var dtos = users.Select(user => user.UserToGetUserResultDto()).ToList();
+            for(int i = 0; i < dtos.Count; i++)
+            {
+                dtos[i].roles = await _userManager.GetRolesAsync(users[i]);
+            }
+            return dtos;
         }
         public async Task<List<Role>> GetRoles()
         {
