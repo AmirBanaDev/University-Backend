@@ -1,6 +1,7 @@
-
+﻿
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 using University_Project.Data;
 using University_Project.Model;
 using University_Project.Repository.Impliment;
@@ -46,6 +47,7 @@ namespace University_Project
             builder.Services.AddScoped<ICourseTypeRepository, CourseTypeRepository>();
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddScoped<ICourseContentRepository, CourseContentRepository>();
+            builder.Services.AddScoped<IRollCallRepository, RollCallRepository>();
             builder.Services.AddScoped<Uploader>();
             #endregion
 

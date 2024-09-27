@@ -37,6 +37,12 @@ namespace University_Project.Controllers
             if (data == null) return NotFound();
             return Ok(data);
         }
+        [HttpGet("roles")]
+        public async Task<IActionResult> GetRoles()
+        {
+            List<Role> roles = await _userRepo.GetRoles();
+            return Ok(roles);
+        }
         [HttpPut("update/{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateUserByAdminDto dto)
         {

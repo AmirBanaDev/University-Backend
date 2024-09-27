@@ -25,8 +25,13 @@ namespace University_Project.Repository.Impliment
         public async Task<List<GetUserResultDto>> GetAll()
         {
             List<GetUserResultDto> users = await _context.users
-                .Select(user => user.UserToGetUserResultDto()).ToListAsync();
+                .Include(e => e.Department).Select(user => user.UserToGetUserResultDto()).ToListAsync();
             return users;
+        }
+        public async Task<List<Role>> GetRoles()
+        {
+            List<Role> roles = await _context.roles.ToListAsync();
+            return roles;
         }
         public async Task<GetUserFavoAndCoursesDto?> GetFavoAndSignups(int id)
         {
@@ -113,7 +118,7 @@ namespace University_Project.Repository.Impliment
                 Course? course = await _context.courses.FirstOrDefaultAsync(c => c.Id == cid);
                 User? user = await _context.users.FirstOrDefaultAsync(u => u.Id == id);
                 if (user == null || course == null) return false;
-                user.Favorites.Remove(course);
+                    user.Favorites.Remove(course);
                 await _context.SaveChangesAsync();
                 return true;
             }

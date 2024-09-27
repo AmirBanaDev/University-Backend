@@ -7,6 +7,6 @@
         public Course Course { get; set;}
         public int? UserId {  get; set; }
         public User? User { get; set; }
-        public int NumberOfPresence {  get; set; } = 0;
+        public int sessionNumber {  get; set; }
     }
 }

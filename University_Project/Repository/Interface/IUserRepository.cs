@@ -8,6 +8,7 @@ namespace University_Project.Repository.Interface
         Task<GetUserResultDto?> GetById(string id);
         Task<GetUserFavoAndCoursesDto?> GetFavoAndSignups(int id);
         Task<List<GetUserResultDto>> GetAll();
+        Task<List<Role>> GetRoles();
         Task<User?> Update(int id, UpdateUserByAdminDto newUserDto);
         Task<bool> Delete(int id);
         Task<bool> AddFavoriteCourse(int id, int cid);

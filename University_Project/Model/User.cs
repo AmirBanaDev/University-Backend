@@ -6,6 +6,7 @@ namespace University_Project.Model
 {
     public class User:IdentityUser<int>
     {
+        public string DisplayName {  get; set; }
         public string IdCard {  get; set; }
         public string? Position {  get; set; }
         public int? DepartmentId {  get; set; }

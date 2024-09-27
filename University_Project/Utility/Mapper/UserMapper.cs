@@ -1,6 +1,4 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using University_Project.DTO.Department;
-using University_Project.DTO.User;
+﻿using University_Project.DTO.User;
 using University_Project.Model;
 
 namespace University_Project.Utility.Mapper
@@ -13,6 +11,7 @@ namespace University_Project.Utility.Mapper
             if (addPassword) password = admin.Password;
             return new User
             {
+                DisplayName = admin.DisplayName,
                 UserName = admin.UserName,
                 IdCard = admin.IdCard,
                 Position = admin.Position,
@@ -25,6 +24,8 @@ namespace University_Project.Utility.Mapper
         {
             return new GetUserResultDto
             {
+                Id = user.Id,
+                DisplayName = user.DisplayName,
                 UserName = user.UserName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
@@ -38,6 +39,7 @@ namespace University_Project.Utility.Mapper
         }
         public static User UpdateUserByAdminDtoToUser(this UpdateUserByAdminDto dto,User user)
         {
+            user.DisplayName = dto.DisplayName ?? user.DisplayName;
             user.UserName = dto.UserName ?? user.UserName;
             user.PhoneNumber = dto.PhoneNumber ?? user.PhoneNumber;
             user.IdCard = dto.IdCard ?? user.IdCard;
