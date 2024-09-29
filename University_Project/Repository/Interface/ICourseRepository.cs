@@ -1,4 +1,5 @@
 ﻿using University_Project.DTO.Course;
+using University_Project.DTO.User;
 using University_Project.Model;
 
 namespace University_Project.Repository.Interface

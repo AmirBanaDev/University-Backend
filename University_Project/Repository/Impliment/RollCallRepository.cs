@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using University_Project.Data;
+using University_Project.DTO.User;
 using University_Project.Model;
 using University_Project.Repository.Interface;
 
@@ -18,7 +19,6 @@ namespace University_Project.Repository.Impliment
             if (rollCalls == null) return null;
             return rollCalls;
         }
-
         public async Task<List<RollCall>?> GetByUserId(int id)
         {
             List<RollCall>? rollCalls = await _context.rollCalls.Where(e => e.UserId == id).ToListAsync();

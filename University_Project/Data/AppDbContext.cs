@@ -61,5 +61,7 @@ namespace University_Project.Data
         public DbSet<Department> departments { get; set; }
         public DbSet<Logo> logos { get; set; }
         public DbSet<RollCall> rollCalls { get; set; }
+        public DbSet<UserCourseSignup> userCourseSignups { get; set; }
+        public DbSet<UserCourseFavorite> userCourseFavorite { get; set; }
     }
 }
