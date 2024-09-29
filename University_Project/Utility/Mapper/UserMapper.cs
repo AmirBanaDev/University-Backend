@@ -47,5 +47,11 @@ namespace University_Project.Utility.Mapper
             user.DepartmentId = dto.DepartmentId ?? user.DepartmentId;
             return user;
         }
+        public static User UpdateUserDtoToUser(this UpdateUserDto dto,User user)
+        {
+            user.Birthdate = dto.Birthdate ?? user.Birthdate;
+            user.Email = dto.Email ?? user.Email;
+            return user;
+        }
     }
 }

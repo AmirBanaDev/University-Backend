@@ -31,7 +31,6 @@ namespace University_Project.Controllers
             return user != null ? Ok(user) : BadRequest("No login accepted");
         }
         [HttpPost("logout")]
-        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await _accountRepo.Logout();

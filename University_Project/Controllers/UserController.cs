@@ -51,6 +51,13 @@ namespace University_Project.Controllers
                 return NotFound();
             return CreatedAtAction(nameof(GetById), new { id = modifiedData.Id }, modifiedData.UserToGetUserResultDto());
         }
+        [HttpPut("edit/{id}")]
+        public async Task<IActionResult> Edit(int id, [FromForm] UpdateUserDto dto)
+        {
+            User? user = await _userRepo.Edit(id, dto);
+            if (user == null) return NotFound();
+            return Ok(user);
+        }
         [HttpDelete("delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
